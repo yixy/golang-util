@@ -5,11 +5,12 @@ go:
   - 1.17.8
 
 install: #依赖安装
-  #- go get github.com/go-playground/overalls #overalls能够支持到各级子目录
-  #- go get github.com/mattn/goveralls #goveralls是coveralls对golang的测试覆盖率支持命令
+  #- go get golang.org/x/tools/cmd/cover
+  #- go get github.com/mattn/goveralls
 
 script: # 集成脚本
     - go test -v -race -coverprofile=coverage.txt -covermode=atomic --cover ./...
+    - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
