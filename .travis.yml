@@ -10,7 +10,6 @@ install: #依赖安装
 
 script: # 集成脚本
     - go test -v -race -coverprofile=coverage.txt -covermode=atomic --cover ./...
-    - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
