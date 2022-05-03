@@ -1,17 +1,8 @@
-package string
+package str
 
 import (
 	"testing"
 )
-
-func TestRandomString(t *testing.T) {
-	result := RandomString(32)
-	if len(result) != 32 {
-		t.Error(len(result))
-	}
-	t.Log(result)
-
-}
 
 func TestHasPrefixes(t *testing.T) {
 	type args struct {
@@ -52,6 +43,46 @@ func TestHasPrefixes(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := HasPrefixes(tt.args.src, tt.args.prefixes...); got != tt.want {
 				t.Errorf("HasPrefixes() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMatch(t *testing.T) {
+	type args struct {
+		src     string
+		mathers []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{name: "case1",
+			args: args{src: "test", mathers: []string{"foo", "bar"}},
+			want: false,
+		},
+		{name: "case2",
+			args: args{src: "bar", mathers: []string{"foo", "bar"}},
+			want: true,
+		},
+		{name: "case3",
+			args: args{src: "foo", mathers: []string{"foo", "bar"}},
+			want: true,
+		},
+		{name: "case4",
+			args: args{src: "test", mathers: []string{"test"}},
+			want: true,
+		},
+		{name: "case5",
+			args: args{src: "test", mathers: []string{"foo"}},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Match(tt.args.src, tt.args.mathers...); got != tt.want {
+				t.Errorf("Match() = %v, want %v", got, tt.want)
 			}
 		})
 	}
